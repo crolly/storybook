@@ -3,14 +3,24 @@ import parameters from './parameters';
 import styles from './styles';
 
 function centered() {
-  return {
-    template: `
+  const params = (new URL(document.location)).searchParams
+  const inDocsView = params.get('viewMode') === 'docs'
+
+  let template
+  if (inDocsView) {
+    template = '<story/>'
+  } else {
+    template = `
       <div :style="style">
         <div :style="innerStyle">
           <story/>
         </div>
       </div>
-    `,
+    `
+  }
+
+  return {
+    template: template,
     data() {
       return styles;
     },
